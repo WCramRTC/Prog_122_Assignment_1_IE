@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        .stack-panel {
+            margin: 10px;
+        }
+
+        .stack-panel.horizontal {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .input-box {
+            width: 100px;
+        }
+
+        .operation-label {
+            width: 100px;
+            text-align: center;
+        }
+
+        .operation-button {
+            width: 50px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="stack-panel">
+            <div class="stack-panel horizontal">
+                <label>First Number:</label>
+                <input type="text" id="number1TextBox" class="input-box">
+            </div>
+            <div class="stack-panel horizontal">
+                <label>Operation:</label>
+                <label id="operationLabel" class="operation-label"></label>
+            </div>
+            <div class="stack-panel horizontal">
+                <label>Second Number:</label>
+                <input type="text" id="number2TextBox" class="input-box">
+            </div>
+            <div class="stack-panel horizontal">
+                <button class="operation-button" onclick="setOperation('+')">+</button>
+                <button class="operation-button" onclick="setOperation('-')">-</button>
+                <button class="operation-button" onclick="setOperation('*')">*</button>
+                <button class="operation-button" onclick="setOperation('/')">/</button>
+                <button id="calculateButton" class="operation-button" onclick="calculate()">=</button>
+            </div>
+            <div class="stack-panel horizontal">
+                <label>Result:</label>
+                <input type="text" id="resultTextBox" class="input-box" readonly>
+            </div>
+        </div>
+    </div>
+    <script>
+        let operationSymbol = "";
+
+        function setOperation(symbol) {
+            operationSymbol = symbol;
+            document.getElementById('operationLabel').innerText = operationSymbol;
+        }
+
+        function calculate() {
+            const number1 = parseFloat(document.getElementById('number1TextBox').value);
+            const number2 = parseFloat(document.getElementById('number2TextBox').value);
+
+            if (!isNaN(number1) && !isNaN(number2)) {
+                switch (operationSymbol) {
+                    case '+':
+                        document.getElementById('resultTextBox').value = (number1 + number2).toString();
+                        break;
+                    case '-':
+                        document.getElementById('resultTextBox').value = (number1 - number2).toString();
+                        break;
+                    case '*':
+                        document.getElementById('resultTextBox').value = (number1 * number2).toString();
+                        break;
+                    case '/':
+                        if (number2 !== 0) {
+                            document.getElementById('resultTextBox').value = (number1 / number2).toString();
+                        } else {
+                            alert("Cannot divide by zero.");
+                        }
+                        break;
+                    default:
+                        alert("Invalid operation.");
+                        break;
+                }
+            } else {
+                alert("Please enter valid numbers.");
+            }
+        }
+    </script>
+</body>
+</html>
